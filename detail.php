@@ -1,3 +1,5 @@
+<script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+              
 <?php
 // SDK de Mercado Pago
 require __DIR__ .  'vendor/autoload.php';
