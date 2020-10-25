@@ -1,3 +1,68 @@
+<?php
+// SDK de Mercado Pago
+// require __DIR__ .  'vendor/autoload.php';
+require_once '../../../vendor/autoload.php';
+
+$title=$_POST['title'];
+$price=$_POST['price'];
+$img=$_POST['img'];
+$desc="Dispositivo móvil de Tienda e-commerce";
+$external=$_GET['external'];
+
+// Agrega credenciales
+MercadoPago\SDK::setAccessToken('APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398');
+MercadoPago\SDK::setIntegratorId("dev_24c65fb163bf11ea96500242ac130004");
+
+// Crea un objeto de preferencia
+$preference = new MercadoPago\Preference();
+
+// Crea un ítem en la preferencia
+$item = new MercadoPago\Item();
+$item->id = "1234";
+$item->title = $title;
+$item->quantity = 1;
+$item->unit_price = $price;
+$item->description = $desc;
+$item->picture_url = $img;
+$preference->items = array($item);
+$preference->notification_url = "https://www.caddy.com.ar/Mp/noti.php?source_news=webhooks";
+$preference->external_reference="prodriguez@dintersa.com.ar";
+
+$preference->payment_methods = array(
+    "excluded_payment_methods" => array(
+    array("id" => "amex" ) ),
+
+    "excluded_payment_types" => array(
+    array("id" => "atm" ) ),
+  
+    "installments" => 6
+);
+
+$preference->back_urls = array(
+    "success" => "https://www.caddy.com.ar/Mp/mp-ecommerce-php-master/success.php",
+    "failure" => "https://www.caddy.com.ar/Mp/failure.php",
+    "pending" => "https://www.caddy.com.ar/Mp/pending.php"
+);
+
+$preference->auto_return = "approved";
+$preference->save();
+
+  $payer = new MercadoPago\Payer();
+  $payer->name = "Lalo";
+  $payer->surname = "Landa";
+  $payer->email = "e[]";
+  $payer->date_created = "2020-09-29T23:58:41.425-03:00";
+  $payer->phone = array(
+    "area_code" => "11",
+    "number" => "22223333"
+  );
+   
+  $payer->address = array( 
+    "street_name" => "False",  
+    "street_number" => 123,
+    "zip_code" => "1111"
+    );
+?>
 <!DOCTYPE html>
 <html class="supports-animation supports-columns svg no-touch no-ie no-oldie no-ios supports-backdrop-filter as-mouseuser" lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
@@ -11,6 +76,8 @@
     src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
     crossorigin="anonymous"></script>
+  
+    <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
 
     <link rel="stylesheet" href="./assets/category-landing.css" media="screen, print">
 
@@ -19,6 +86,7 @@
     <link rel="stylesheet" href="./assets/merch-tools.css" media="screen, print">
 
     <link rel="stylesheet" href="./assets/fonts" media="">
+  
     <style>
         .as-filter-button-text {
             font-size: 26px;
@@ -113,6 +181,7 @@
                                     </div>
 
                                 </div>
+                            <div id="formulario">
                                 <div class="as-producttile-info" style="float:left;min-height: 168px;">
                                     <div class="as-producttile-titlepricewraper" style="min-height: 128px;">
                                         <div class="as-producttile-title">
@@ -129,12 +198,16 @@
                                         <h3 >
                                             <?php echo "$" . $_POST['unit'] ?>
                                         </h3>
-                                    </div>
-                                      <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=469485398-f83d93eb-976f-4843-bb6c-aa4c7aa2c39a">Pagar la Compra</a>
-
-<!--                                     <button type="submit" class="mercadopago-button" formmethod="post">Pagar</button> -->
+                                <script
+                                src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
+                                data-preference-id="<?php echo $preference->id; ?>"
+                                data-button-label="Pagar la compra">
+                              </script>
+                                  </div>
                                 </div>
-                            </div>
+                              
+                               </div>
+                              </div>
                         </div>
                     </div>
                 </div>
