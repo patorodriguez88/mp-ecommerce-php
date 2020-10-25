@@ -130,7 +130,9 @@
                                             <?php echo "$" . $_POST['unit'] ?>
                                         </h3>
                                     </div>
-                                    <button type="submit" class="mercadopago-button" formmethod="post">Pagar</button>
+                                      <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=469485398-f83d93eb-976f-4843-bb6c-aa4c7aa2c39a">Pagar la Compra</a>
+
+<!--                                     <button type="submit" class="mercadopago-button" formmethod="post">Pagar</button> -->
                                 </div>
                             </div>
                         </div>
