@@ -1,9 +1,6 @@
-<script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
-              
 <?php
 // SDK de Mercado Pago
-// require __DIR__ .  'vendor/autoload.php';
-require_once(__DIR__ . '/vendor/autoload.php');
+require __DIR__ .  'vendor/autoload.php';
 // require_once '../../../vendor/autoload.php';
 
 $title=$_POST['title'];
@@ -11,7 +8,6 @@ $price=$_POST['price'];
 $img=$_POST['img'];
 $desc="Dispositivo móvil de Tienda e-commerce";
 $external=$_GET['external'];
-
 // Agrega credenciales
 MercadoPago\SDK::setAccessToken('APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398');
 MercadoPago\SDK::setIntegratorId("dev_24c65fb163bf11ea96500242ac130004");
@@ -30,7 +26,6 @@ $item->picture_url = $img;
 $preference->items = array($item);
 $preference->notification_url = "https://www.caddy.com.ar/Mp/noti.php?source_news=webhooks";
 $preference->external_reference="prodriguez@dintersa.com.ar";
-
 $preference->payment_methods = array(
     "excluded_payment_methods" => array(
     array("id" => "amex" ) ),
@@ -42,18 +37,18 @@ $preference->payment_methods = array(
 );
 
 $preference->back_urls = array(
-    "success" => "https://www.caddy.com.ar/Mp/mp-ecommerce-php-master/success.php",
-    "failure" => "https://www.caddy.com.ar/Mp/failure.php",
-    "pending" => "https://www.caddy.com.ar/Mp/pending.php"
+    "success" => "https://www.caddy.com.ar/mp/mp-ecommerce-php-master/success.php",
+    "failure" => "https://www.caddy.com.ar/mp/mp-ecommerce-php-master/failure.php",
+    "pending" => "https://www.caddy.com.ar/mp/mp-ecommerce-php-master/pending.php"
 );
 
 $preference->auto_return = "approved";
-$preference->save();
+
 
   $payer = new MercadoPago\Payer();
   $payer->name = "Lalo";
   $payer->surname = "Landa";
-  $payer->email = "e[]";
+  $payer->email = "test_user_63274575@testuser.com";
   $payer->date_created = "2020-09-29T23:58:41.425-03:00";
   $payer->phone = array(
     "area_code" => "11",
@@ -65,6 +60,9 @@ $preference->save();
     "street_number" => 123,
     "zip_code" => "1111"
     );
+$preference->payer=$payer;
+$preference->save();
+
 ?>
 <!DOCTYPE html>
 <html class="supports-animation supports-columns svg no-touch no-ie no-oldie no-ios supports-backdrop-filter as-mouseuser" lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
