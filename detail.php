@@ -1,7 +1,7 @@
 <?php
 // SDK de Mercado Pago
 // require __DIR__ .  'vendormp/autoload.php';
-require_once '../../vendormp/autoload.php';
+require_once 'vendormp/autoload.php';
 
 $title=$_POST['title'];
 $price=$_POST['price'];
